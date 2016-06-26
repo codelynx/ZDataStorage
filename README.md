@@ -124,6 +124,14 @@ storage.copyToPath(anotherPath)
 
 If you have found any bugs or issues, please feel free to contact Kaz Yoshikawa [kaz@digitallynx.com](kaz@digitallynx.com)
 
+### Environment
+
+```.log
+Xcode Version 7.3 (7D175)
+Apple Swift version 2.2 (swiftlang-703.0.18.1 clang-703.0.29)
+```
+
+
 ### License
 
 The MIT License.
