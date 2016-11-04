@@ -11,7 +11,7 @@
 		CC16503B1DCC139200DFAF9B /* NSData+crc16.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1650381DCC139200DFAF9B /* NSData+crc16.swift */; };
 		CC16503C1DCC139200DFAF9B /* NSFileHandle+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1650391DCC139200DFAF9B /* NSFileHandle+Z.swift */; };
 		CC16503D1DCC139200DFAF9B /* ZDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC16503A1DCC139200DFAF9B /* ZDataStorage.swift */; };
-		CCBE29E11DCC528500717EC5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CCBE29E01DCC528500717EC5 /* Default-568h@2x.png */; };
+		CCBE29E31DCC715600717EC5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CCBE29E21DCC715600717EC5 /* Default-568h@2x.png */; };
 		CCE64F371DCC37660088D255 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE64F361DCC37660088D255 /* AppDelegate.swift */; };
 		CCE64F3C1DCC37660088D255 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCE64F3A1DCC37660088D255 /* Main.storyboard */; };
 		CCE64F3E1DCC37660088D255 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCE64F3D1DCC37660088D255 /* Assets.xcassets */; };
@@ -28,7 +28,7 @@
 		CC1650381DCC139200DFAF9B /* NSData+crc16.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+crc16.swift"; sourceTree = "<group>"; };
 		CC1650391DCC139200DFAF9B /* NSFileHandle+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFileHandle+Z.swift"; sourceTree = "<group>"; };
 		CC16503A1DCC139200DFAF9B /* ZDataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZDataStorage.swift; sourceTree = "<group>"; };
-		CCBE29E01DCC528500717EC5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
+		CCBE29E21DCC715600717EC5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		CCE64F341DCC37660088D255 /* ZTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCE64F361DCC37660088D255 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CCE64F3B1DCC37660088D255 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -96,7 +96,7 @@
 		CCE64F351DCC37660088D255 /* ZTestApp */ = {
 			isa = PBXGroup;
 			children = (
-				CCBE29E01DCC528500717EC5 /* Default-568h@2x.png */,
+				CCBE29E21DCC715600717EC5 /* Default-568h@2x.png */,
 				CCE64F361DCC37660088D255 /* AppDelegate.swift */,
 				CCE64F461DCC37B60088D255 /* TableViewController.swift */,
 				CCE64F3A1DCC37660088D255 /* Main.storyboard */,
@@ -197,7 +197,7 @@
 			files = (
 				CCE64F3E1DCC37660088D255 /* Assets.xcassets in Resources */,
 				CCE64F3C1DCC37660088D255 /* Main.storyboard in Resources */,
-				CCBE29E11DCC528500717EC5 /* Default-568h@2x.png in Resources */,
+				CCBE29E31DCC715600717EC5 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

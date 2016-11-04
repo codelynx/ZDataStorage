@@ -74,7 +74,7 @@ class TableViewController: UITableViewController {
 		}
 		else {
 			let selector = #selector(TableViewController.timerDidFire(timer:))
-			self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: selector, userInfo: nil, repeats: true)
+			self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: selector, userInfo: nil, repeats: true)
 			sender.title = "Stop Generating"
 		}
 	}
@@ -84,7 +84,6 @@ class TableViewController: UITableViewController {
 		let key = String(format: "%08x", number)
 		let value = UUID().uuidString
 		self.dataStorage.set(string: value, forKey: key)
-		self.dataStorage.commit()
 		self.tableView.reloadData()
 	}
 
@@ -100,6 +99,9 @@ class TableViewController: UITableViewController {
 		self.tableView.reloadData()
 	}
 
+	@IBAction func commitAction(_ sender: Any) {
+		self.dataStorage.commit()
+	}
 	
 	
 }

@@ -54,6 +54,12 @@
                                 <action selector="generateAction:" destination="huZ-Vx-VYx" id="fKj-UI-EoQ"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="vWO-oj-Nqc"/>
+                        <barButtonItem title="Commit" id="mrr-kj-q6G">
+                            <connections>
+                                <action selector="commitAction:" destination="huZ-Vx-VYx" id="Faa-Ke-ZGM"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="JL4-b8-pct"/>
                         <barButtonItem title="Crash" id="GNZ-Bq-4b0">
                             <connections>
