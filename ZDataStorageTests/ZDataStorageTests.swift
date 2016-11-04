@@ -17,14 +17,14 @@ class ZDataStorageTests: XCTestCase {
 	
     override func setUp() {
         super.setUp()
-		let fileManager = NSFileManager.defaultManager()
+		let fileManager = FileManager.default
 		let directory = NSTemporaryDirectory()
 		do {
-			for item in try fileManager.contentsOfDirectoryAtPath(directory) {
+			for item in try fileManager.contentsOfDirectory(atPath: directory) {
 				let pathExtension = (item as NSString).pathExtension
 				if self.extensions.contains(pathExtension) {
-					let filePath = (directory as NSString).stringByAppendingPathComponent(item)
-					try fileManager.removeItemAtPath(filePath)
+					let filePath = (directory as NSString).appendingPathComponent(item)
+					try fileManager.removeItem(atPath: filePath)
 				}
 			}
 		}
@@ -45,95 +45,95 @@ class ZDataStorageTests: XCTestCase {
 
 
 	func testBasic1() {
-		let fileManager = NSFileManager.defaultManager()
-		let filePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("basic1.store")
+		let fileManager = FileManager.default
+		let filePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic1.store")
 		print("filePath=\(filePath)")
-		let backupFilePath = filePath.stringByAppendingString("~")
+		let backupFilePath = filePath.appending("~")
 		do {
 			let dataStorage = ZDataStorage(path: filePath)!
 			let key1 = "name"
-			let value1 = NSData(base64EncodedString: "R29vZCBtb3JuaW5nIE5ldyBZb3JrLg0K", options: [])!
-			dataStorage.setData(value1, forKey: key1)
-			XCTAssert(fileManager.fileExistsAtPath(backupFilePath)) // backup should have been created
-			
-			let data1 = dataStorage.dataForKey(key1)!
-			XCTAssert(value1.isEqualToData(data1))
+			let value1 = Data(base64Encoded: "R29vZCBtb3JuaW5nIE5ldyBZb3JrLg0K", options: [])!
+			dataStorage.set(data: value1, forKey: key1)
+			XCTAssert(fileManager.fileExists(atPath: backupFilePath)) // backup should have been created
+			let data1 = dataStorage.data(forKey: key1)!
+			XCTAssert(value1 == data1)
 		}
-		XCTAssert(!fileManager.fileExistsAtPath(backupFilePath)) // backup should have been removed
+		XCTAssert(!fileManager.fileExists(atPath: backupFilePath)) // backup should have been removed
 	}
 
 	func testBasicMultipleWrite() {
-		let filePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("basic2.store")
+		let filePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic2.store")
 		do {
 			let storage = ZDataStorage(path: filePath)!
-			storage.setString("Tokyo", forKey: "city")
-			storage.setString("Japan", forKey: "country")
-			storage.setString("Sushi", forKey: "food")
-			storage.setString("Apple", forKey: "fruit")
+			storage.set(string: "Tokyo", forKey: "city")
+			storage.set(string: "Japan", forKey: "country")
+			storage.set(string: "Sushi", forKey: "food")
+			storage.set(string: "Apple", forKey: "fruit")
 			
-			XCTAssert(storage.stringForKey("city") == "Tokyo")
-			XCTAssert(storage.stringForKey("country") == "Japan")
-			XCTAssert(storage.stringForKey("food") == "Sushi")
-			XCTAssert(storage.stringForKey("fruit") == "Apple")
+			XCTAssert(storage.string(forKey: "city") == "Tokyo")
+			XCTAssert(storage.string(forKey: "country") == "Japan")
+			XCTAssert(storage.string(forKey: "food") == "Sushi")
+			XCTAssert(storage.string(forKey: "fruit") == "Apple")
 		}
 	}
 
 	func testBasicOverwrite() {
-		let filePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("basic3.store")
+
+		let filePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic3.store")
 		do {
 			let storage = ZDataStorage(path: filePath)!
-			storage.setString("Tokyo", forKey: "city")
-			storage.setString("Japan", forKey: "country")
-			XCTAssert(storage.stringForKey("city") == "Tokyo")
-			XCTAssert(storage.stringForKey("country") == "Japan")
+			storage.set(string: "Tokyo", forKey: "city")
+			storage.set(string: "Japan", forKey: "country")
+			XCTAssert(storage.string(forKey: "city") == "Tokyo")
+			XCTAssert(storage.string(forKey: "country") == "Japan")
 
-			storage.setString(nil, forKey: "city")
-			storage.setString("Orange", forKey: "fruit")
+			storage.set(string: nil, forKey: "city")
+			storage.set(string: "Orange", forKey: "fruit")
 			
-			XCTAssertNil(storage.stringForKey("city"))
-			XCTAssert(storage.stringForKey("fruit") == "Orange")
+			XCTAssertNil(storage.string(forKey: "city"))
+			XCTAssert(storage.string(forKey: "fruit") == "Orange")
 		}
 	}
 
 	func testRollback() {
-		let filePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("basic4.store")
+		let filePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic4.store")
 		do {
 			let storage = ZDataStorage(path: filePath)!
-			storage.setString("Tokyo", forKey: "city")
-			storage.setString("Japan", forKey: "country")
-			storage.setString("Sushi", forKey: "food")
-			storage.setString("Apple", forKey: "fruit")
+			storage.set(string: "Tokyo", forKey: "city")
+			storage.set(string: "Japan", forKey: "country")
+			storage.set(string: "Sushi", forKey: "food")
+			storage.set(string: "Apple", forKey: "fruit")
 			storage.commit()
 
-			storage.setString(nil, forKey: "city")
-			storage.setString("Orange", forKey: "fruit")
+			storage.set(string: nil, forKey: "city")
+			storage.set(string: "Orange", forKey: "fruit")
 			storage.rollback()
 			
-			XCTAssert(storage.stringForKey("city") == "Tokyo")
-			XCTAssert(storage.stringForKey("country") == "Japan")
-			XCTAssert(storage.stringForKey("food") == "Sushi")
-			XCTAssert(storage.stringForKey("fruit") == "Apple")
+			XCTAssert(storage.string(forKey: "city") == "Tokyo")
+			XCTAssert(storage.string(forKey: "country") == "Japan")
+			XCTAssert(storage.string(forKey: "food") == "Sushi")
+			XCTAssert(storage.string(forKey: "fruit") == "Apple")
 		}
 	}
 
 	func testMultithreading() {
-		let filePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("basic5.store")
+		let filePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic5.store")
 		print("filePath=\(filePath)")
 		var dictionary = [String: String]()
 		do {
 			let storage = ZDataStorage(path: filePath)!
-			let queue = dispatch_queue_create("com.threads", DISPATCH_QUEUE_CONCURRENT)
+			let queue = DispatchQueue(label: "com.threads", attributes: .concurrent)
 			let lock = NSLock()
-			let remainder: UInt = 100
-			dispatch_apply(100, queue) { _ in
+			let remainder: Int = 100
+			DispatchQueue.concurrentPerform(iterations: 100) { _ in
 				for _ in 0 ..< 100 {
 					lock.lock()
 					defer { lock.unlock() }
-					let uuid = NSUUID().UUIDString
-					let hash = unsafeBitCast(uuid.hashValue, UInt.self) % remainder
+					let uuid = NSUUID().uuidString
+					let hash = uuid.hashValue % remainder
 					let key = String(hash)
 					dictionary[key] = uuid
-					storage.setString(uuid, forKey: key)
+					storage.set(string: uuid, forKey: key)
 				}
 			}
 			storage.commit()
@@ -148,7 +148,7 @@ class ZDataStorageTests: XCTestCase {
 
 			for key in dictionary.keys {
 				let sourceString = dictionary[key]
-				let destinationString = storage.stringForKey(key)
+				let destinationString = storage.string(forKey: key)
 				XCTAssertNotNil(destinationString)
 				XCTAssert(sourceString! == destinationString!)
 			}
@@ -157,27 +157,27 @@ class ZDataStorageTests: XCTestCase {
 	}
 	
 	func testCopy() {
-		let sourceFilePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("basic6.store")
-		let destinationFilePath = (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("basic7.store")
+		let sourceFilePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic6.store")
+		let destinationFilePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic7.store")
 		var dictionary = [String: String]()
 		do {
 			let storage = ZDataStorage(path: sourceFilePath)!
-			for i in 0 ..< 1000 {
-				let uuid = NSUUID().UUIDString
-				let hash = unsafeBitCast(uuid.hashValue, UInt.self) % 10
+			for _ in 0 ..< 1000 {
+				let uuid = NSUUID().uuidString
+				let hash = uuid.hashValue
 				let key = String(hash)
 				dictionary[key] = uuid
-				storage.setString(uuid, forKey: key)
+				storage.set(string: uuid, forKey: key)
 			}
 			storage.commit()
-			storage.copyToPath(destinationFilePath)
+			_ = storage.copyToPath(path: destinationFilePath)
 		}
 
 		do {
 			let destinationStorage = ZDataStorage(path: destinationFilePath)!
 			for (key, _) in dictionary {
 				let sourceString = dictionary[key]
-				let destinationString = destinationStorage.stringForKey(key)
+				let destinationString = destinationStorage.string(forKey: key)
 				if let sourceString = sourceString, let destinationString = destinationString {
 					XCTAssert(sourceString == destinationString)
 				}
@@ -189,7 +189,7 @@ class ZDataStorageTests: XCTestCase {
 
     func testPerformanceExample() {
         // This is an example of a performance test case.
-        self.measureBlock {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }

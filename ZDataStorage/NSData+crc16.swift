@@ -28,16 +28,15 @@
 import Foundation
 
 
-extension NSData {
+extension Data {
 
 	func crc16() -> UInt16 {
 	
 		let CRCPOLY1: UInt16 = 0x1021 /* x^{16}+x^{12}+x^5+1 */
 		
-		var c = Array(UnsafeBufferPointer(start: UnsafePointer<UInt8>(self.bytes), count: self.length))
 		var r: UInt16 = 0xffff
-		for i in 0 ..< self.length {
-			r = r ^ (UInt16(c[i]) << UInt16(16 - CHAR_BIT))
+        for i: UInt8 in self {
+			r = r ^ (UInt16(i) << UInt16(16 - CHAR_BIT))
 			for _ in 0 ..< CHAR_BIT {
 				if (r & 0x8000 != 0) {
 					r = (r << 1) ^ CRCPOLY1
@@ -46,9 +45,8 @@ extension NSData {
 					r <<= 1
 				}
 			}
-		}
+        }
 		return ~r & 0xffff
 	}
-
 
 }

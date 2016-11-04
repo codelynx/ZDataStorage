@@ -7,23 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC4DB9011D1EC416006FD8A7 /* ZDataStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4DB9001D1EC416006FD8A7 /* ZDataStorageTests.swift */; };
-		CC4DB90A1D1EC4B5006FD8A7 /* ZDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4DB8F41D1DBB2D006FD8A7 /* ZDataStorage.swift */; };
-		CC4DB90B1D1EC4BB006FD8A7 /* NSData+crc16.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4DB8F81D1E60DB006FD8A7 /* NSData+crc16.swift */; };
-		CC4DB90C1D1EC4BB006FD8A7 /* NSFileHandle+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC4DB8F61D1DBB65006FD8A7 /* NSFileHandle+Z.swift */; };
+		CC1650321DCC136500DFAF9B /* ZDataStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1650311DCC136500DFAF9B /* ZDataStorageTests.swift */; };
+		CC16503B1DCC139200DFAF9B /* NSData+crc16.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1650381DCC139200DFAF9B /* NSData+crc16.swift */; };
+		CC16503C1DCC139200DFAF9B /* NSFileHandle+Z.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1650391DCC139200DFAF9B /* NSFileHandle+Z.swift */; };
+		CC16503D1DCC139200DFAF9B /* ZDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC16503A1DCC139200DFAF9B /* ZDataStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CC4DB8F41D1DBB2D006FD8A7 /* ZDataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZDataStorage.swift; sourceTree = "<group>"; };
-		CC4DB8F61D1DBB65006FD8A7 /* NSFileHandle+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFileHandle+Z.swift"; sourceTree = "<group>"; };
-		CC4DB8F81D1E60DB006FD8A7 /* NSData+crc16.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+crc16.swift"; sourceTree = "<group>"; };
-		CC4DB8FE1D1EC416006FD8A7 /* ZDataStorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZDataStorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC4DB9001D1EC416006FD8A7 /* ZDataStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDataStorageTests.swift; sourceTree = "<group>"; };
-		CC4DB9021D1EC416006FD8A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC16502E1DCC136500DFAF9B /* ZDataStorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZDataStorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC1650311DCC136500DFAF9B /* ZDataStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZDataStorageTests.swift; sourceTree = "<group>"; };
+		CC1650331DCC136500DFAF9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CC1650381DCC139200DFAF9B /* NSData+crc16.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSData+crc16.swift"; sourceTree = "<group>"; };
+		CC1650391DCC139200DFAF9B /* NSFileHandle+Z.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSFileHandle+Z.swift"; sourceTree = "<group>"; };
+		CC16503A1DCC139200DFAF9B /* ZDataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZDataStorage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		CC4DB8FB1D1EC416006FD8A7 /* Frameworks */ = {
+		CC16502B1DCC136500DFAF9B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,52 +33,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		CC4DB8D61D1DBB04006FD8A7 = {
+		CC1650231DCC134B00DFAF9B = {
 			isa = PBXGroup;
 			children = (
-				CC4DB8E11D1DBB04006FD8A7 /* ZDataStorage */,
-				CC4DB8FF1D1EC416006FD8A7 /* ZDataStorageTests */,
-				CC4DB8E01D1DBB04006FD8A7 /* Products */,
+				CC1650371DCC139200DFAF9B /* ZDataStorage */,
+				CC1650301DCC136500DFAF9B /* ZDataStorageTests */,
+				CC16502F1DCC136500DFAF9B /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		CC4DB8E01D1DBB04006FD8A7 /* Products */ = {
+		CC16502F1DCC136500DFAF9B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CC4DB8FE1D1EC416006FD8A7 /* ZDataStorageTests.xctest */,
+				CC16502E1DCC136500DFAF9B /* ZDataStorageTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CC4DB8E11D1DBB04006FD8A7 /* ZDataStorage */ = {
+		CC1650301DCC136500DFAF9B /* ZDataStorageTests */ = {
 			isa = PBXGroup;
 			children = (
-				CC4DB8F81D1E60DB006FD8A7 /* NSData+crc16.swift */,
-				CC4DB8F61D1DBB65006FD8A7 /* NSFileHandle+Z.swift */,
-				CC4DB8F41D1DBB2D006FD8A7 /* ZDataStorage.swift */,
-			);
-			path = ZDataStorage;
-			sourceTree = "<group>";
-		};
-		CC4DB8FF1D1EC416006FD8A7 /* ZDataStorageTests */ = {
-			isa = PBXGroup;
-			children = (
-				CC4DB9001D1EC416006FD8A7 /* ZDataStorageTests.swift */,
-				CC4DB9021D1EC416006FD8A7 /* Info.plist */,
+				CC1650311DCC136500DFAF9B /* ZDataStorageTests.swift */,
+				CC1650331DCC136500DFAF9B /* Info.plist */,
 			);
 			path = ZDataStorageTests;
+			sourceTree = "<group>";
+		};
+		CC1650371DCC139200DFAF9B /* ZDataStorage */ = {
+			isa = PBXGroup;
+			children = (
+				CC1650381DCC139200DFAF9B /* NSData+crc16.swift */,
+				CC1650391DCC139200DFAF9B /* NSFileHandle+Z.swift */,
+				CC16503A1DCC139200DFAF9B /* ZDataStorage.swift */,
+			);
+			path = ZDataStorage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CC4DB8FD1D1EC416006FD8A7 /* ZDataStorageTests */ = {
+		CC16502D1DCC136500DFAF9B /* ZDataStorageTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CC4DB9051D1EC416006FD8A7 /* Build configuration list for PBXNativeTarget "ZDataStorageTests" */;
+			buildConfigurationList = CC1650341DCC136500DFAF9B /* Build configuration list for PBXNativeTarget "ZDataStorageTests" */;
 			buildPhases = (
-				CC4DB8FA1D1EC416006FD8A7 /* Sources */,
-				CC4DB8FB1D1EC416006FD8A7 /* Frameworks */,
-				CC4DB8FC1D1EC416006FD8A7 /* Resources */,
+				CC16502A1DCC136500DFAF9B /* Sources */,
+				CC16502B1DCC136500DFAF9B /* Frameworks */,
+				CC16502C1DCC136500DFAF9B /* Resources */,
 			);
 			buildRules = (
 			);
@@ -86,45 +86,44 @@
 			);
 			name = ZDataStorageTests;
 			productName = ZDataStorageTests;
-			productReference = CC4DB8FE1D1EC416006FD8A7 /* ZDataStorageTests.xctest */;
+			productReference = CC16502E1DCC136500DFAF9B /* ZDataStorageTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		CC4DB8D71D1DBB04006FD8A7 /* Project object */ = {
+		CC1650241DCC134B00DFAF9B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
-				ORGANIZATIONNAME = "Electricwoods LLC";
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0810;
 				TargetAttributes = {
-					CC4DB8FD1D1EC416006FD8A7 = {
-						CreatedOnToolsVersion = 7.3;
-						TestTargetID = CC4DB8DE1D1DBB04006FD8A7;
+					CC16502D1DCC136500DFAF9B = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = 2P97EM4L4N;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = CC4DB8DA1D1DBB04006FD8A7 /* Build configuration list for PBXProject "ZDataStorage" */;
+			buildConfigurationList = CC1650271DCC134B00DFAF9B /* Build configuration list for PBXProject "ZDataStorage" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
-			mainGroup = CC4DB8D61D1DBB04006FD8A7;
-			productRefGroup = CC4DB8E01D1DBB04006FD8A7 /* Products */;
+			mainGroup = CC1650231DCC134B00DFAF9B;
+			productRefGroup = CC16502F1DCC136500DFAF9B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CC4DB8FD1D1EC416006FD8A7 /* ZDataStorageTests */,
+				CC16502D1DCC136500DFAF9B /* ZDataStorageTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		CC4DB8FC1D1EC416006FD8A7 /* Resources */ = {
+		CC16502C1DCC136500DFAF9B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -134,21 +133,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		CC4DB8FA1D1EC416006FD8A7 /* Sources */ = {
+		CC16502A1DCC136500DFAF9B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC4DB90A1D1EC4B5006FD8A7 /* ZDataStorage.swift in Sources */,
-				CC4DB90C1D1EC4BB006FD8A7 /* NSFileHandle+Z.swift in Sources */,
-				CC4DB9011D1EC416006FD8A7 /* ZDataStorageTests.swift in Sources */,
-				CC4DB90B1D1EC4BB006FD8A7 /* NSData+crc16.swift in Sources */,
+				CC16503C1DCC139200DFAF9B /* NSFileHandle+Z.swift in Sources */,
+				CC16503B1DCC139200DFAF9B /* NSData+crc16.swift in Sources */,
+				CC16503D1DCC139200DFAF9B /* ZDataStorage.swift in Sources */,
+				CC1650321DCC136500DFAF9B /* ZDataStorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		CC4DB8EF1D1DBB04006FD8A7 /* Debug */ = {
+		CC1650281DCC134B00DFAF9B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		CC1650291DCC134B00DFAF9B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		CC1650351DCC136500DFAF9B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -160,15 +171,19 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -185,16 +200,21 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				INFOPLIST_FILE = ZDataStorageTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ZDataStorageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
-		CC4DB8F01D1DBB04006FD8A7 /* Release */ = {
+		CC1650361DCC136500DFAF9B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -206,15 +226,19 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -225,60 +249,40 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				INFOPLIST_FILE = ZDataStorageTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ZDataStorageTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		CC4DB9061D1EC416006FD8A7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = ZDataStorageTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ZDataStorageTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZDataStorage.app/ZDataStorage";
-			};
-			name = Debug;
-		};
-		CC4DB9071D1EC416006FD8A7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = ZDataStorageTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ZDataStorageTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZDataStorage.app/ZDataStorage";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CC4DB8DA1D1DBB04006FD8A7 /* Build configuration list for PBXProject "ZDataStorage" */ = {
+		CC1650271DCC134B00DFAF9B /* Build configuration list for PBXProject "ZDataStorage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CC4DB8EF1D1DBB04006FD8A7 /* Debug */,
-				CC4DB8F01D1DBB04006FD8A7 /* Release */,
+				CC1650281DCC134B00DFAF9B /* Debug */,
+				CC1650291DCC134B00DFAF9B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CC4DB9051D1EC416006FD8A7 /* Build configuration list for PBXNativeTarget "ZDataStorageTests" */ = {
+		CC1650341DCC136500DFAF9B /* Build configuration list for PBXNativeTarget "ZDataStorageTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CC4DB9061D1EC416006FD8A7 /* Debug */,
-				CC4DB9071D1EC416006FD8A7 /* Release */,
+				CC1650351DCC136500DFAF9B /* Debug */,
+				CC1650361DCC136500DFAF9B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = CC4DB8D71D1DBB04006FD8A7 /* Project object */;
+	rootObject = CC1650241DCC134B00DFAF9B /* Project object */;
 }

@@ -1,3 +1,5 @@
+![swift](https://img.shields.io/badge/swift-3.0-orange.svg) ![license](https://img.shields.io/badge/license-MIT-yellow.svg)
+
 # ZDataStorage
 
 ZDataStorage is a utility class to load and save multiple `NSData` or `String` into a single file, and can be retrieved or save with `key` string.  It is good for caching small but many data needed to be kept in app.  It is not suitable for managing large size of images, but it is suitable for managing many small size data.
@@ -127,8 +129,8 @@ If you have found any bugs or issues, please feel free to contact Kaz Yoshikawa 
 ### Environment
 
 ```.log
-Xcode Version 7.3 (7D175)
-Apple Swift version 2.2 (swiftlang-703.0.18.1 clang-703.0.29)
+Xcode Version 8.1 (8B62)
+Apple Swift version 3.0.1 (swiftlang-800.0.58.6 clang-800.0.42.1)
 ```
 
 

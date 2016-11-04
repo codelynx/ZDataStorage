@@ -1,5 +1,5 @@
 //
-//	NSFileHandle+Z.swift
+//	FileHandle+Z.swift
 //	ZKit
 //
 //	The MIT License (MIT)
@@ -28,23 +28,27 @@
 
 import Foundation
 
-extension NSFileHandle {
+extension FileHandle {
 
 	// read write as is
 
 	private func read<T>() -> T? {
-		let data = self.readDataOfLength(sizeof(T))
-		if data.length == sizeof(T) {
-			let value = UnsafePointer<T>(data.bytes)
-			return value.memory
+		var data = self.readData(ofLength: MemoryLayout<T>.size)
+		if data.count == MemoryLayout<T>.size {
+            var value: T?
+            data.withUnsafeBytes({ (bytes: UnsafePointer<T>) -> Void in
+                value = bytes.pointee
+            })
+			return value
 		}
 		return nil
 	}
 
-	private func write<T>(value: T) {
+	private func write<T>(_ value: T) {
 		var value = value
-		let data = NSData(bytes: &value, length: sizeof(T))
-		self.writeData(data)
+        let buffer = UnsafeBufferPointer(start: &value, count: 1)
+        let data = Data(buffer: buffer)
+		self.write(data)
 	}
 
 	// unsigned integers
@@ -56,7 +60,7 @@ extension NSFileHandle {
 		return nil
 	}
 
-	public func writeUInt16(value: UInt16) {
+	public func writeUInt16(_ value: UInt16) {
 		let value16 = CFSwapInt16HostToBig(value)
 		self.write(value16)
 	}
@@ -68,7 +72,7 @@ extension NSFileHandle {
 		return nil
 	}
 
-	public func writeUInt32(value: UInt32) {
+	public func writeUInt32(_ value: UInt32) {
 		let value = CFSwapInt32HostToBig(value)
 		self.write(value)
 	}
@@ -80,7 +84,7 @@ extension NSFileHandle {
 		return nil
 	}
 
-	public func writeUInt64(value: UInt64) {
+	public func writeUInt64(_ value: UInt64) {
 		let value = CFSwapInt64HostToBig(value)
 		self.write(value)
 	}
@@ -94,7 +98,7 @@ extension NSFileHandle {
 		return nil
 	}
 
-	public func writeInt16(value: Int16) {
+	public func writeInt16(_ value: Int16) {
 		self.write(CFSwapInt16HostToBig(UInt16(value)))
 	}
 
@@ -105,7 +109,7 @@ extension NSFileHandle {
 		return nil
 	}
 
-	public func writeInt32(value: Int32) {
+	public func writeInt32(_ value: Int32) {
 		self.write(CFSwapInt32HostToBig(UInt32(value)))
 	}
 
@@ -116,7 +120,7 @@ extension NSFileHandle {
 		return nil
 	}
 
-	public func writeInt64(value: Int64) {
+	public func writeInt64(_ value: Int64) {
 		self.write(CFSwapInt64HostToBig(UInt64(value)))
 	}
 
@@ -135,10 +139,10 @@ extension NSFileHandle {
 		return nil
 	}
 	
-	public func writeFloat(value: Float) {
+	public func writeFloat(_ value: Float) {
 		switch UInt32(CFByteOrderGetCurrent()) {
 		case CFByteOrderLittleEndian.rawValue:
-			self.write(CFConvertFloat32HostToSwapped(value))
+			self.write(CFConvertFloat32HostToSwapped(Float32(value)))
 		case CFByteOrderBigEndian.rawValue:
 			self.write(value)
 		default: fatalError("Unknown Endian")
@@ -158,7 +162,7 @@ extension NSFileHandle {
 		return nil
 	}
 	
-	public func writeDouble(value: Double) {
+	public func writeDouble(_ value: Double) {
 		switch UInt32(CFByteOrderGetCurrent()) {
 		case CFByteOrderLittleEndian.rawValue:
 			self.write(CFConvertFloat64HostToSwapped(value))
