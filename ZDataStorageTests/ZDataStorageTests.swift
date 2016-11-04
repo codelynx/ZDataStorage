@@ -60,7 +60,7 @@ class ZDataStorageTests: XCTestCase {
 
 	func testBasic1() {
 		let fileManager = FileManager.default
-		let filePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic1.store")
+		let filePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic1a.store")
 		print("filePath=\(filePath)")
 		let backupFilePath = filePath.appending("~")
 		do {
@@ -73,6 +73,20 @@ class ZDataStorageTests: XCTestCase {
 			XCTAssert(value1 == data1)
 		}
 		XCTAssert(!fileManager.fileExists(atPath: backupFilePath)) // backup should have been removed
+	}
+
+	func testBasic2() {
+		let filePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic1b.store")
+		do {
+			let storage = ZDataStorage(path: filePath)!
+			storage["city"] = "Tokyo" // string
+			storage["countries"] = ["Japan", "Canada"] // array
+			storage["scores"] = ["taro": 50, "jiro": 75, "saburo" : 95] // dictionary
+			
+			XCTAssert(storage["city"] == "Tokyo")
+			XCTAssert(storage["countries"] == ["Japan", "Canada"])
+			XCTAssert(storage["scores"] == ["taro": 50, "jiro": 75, "saburo" : 95])
+		}
 	}
 
 	func testBasicMultipleWrite() {
@@ -236,5 +250,4 @@ class ZDataStorageTests: XCTestCase {
 		}
     }
 
-	
 }

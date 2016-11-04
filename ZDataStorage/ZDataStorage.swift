@@ -257,8 +257,6 @@ class ZDataStorage {
 		needsCommit = true
 	}
 
-	
-	// MARK: -
 
 	subscript(key: String) -> Data? {
 		get {
@@ -287,22 +285,59 @@ class ZDataStorage {
 		}
 	}
 
-	// MARK: -
-
-/*
-	subscript(key: String) -> NSDictionary? {
+	subscript(key: String) -> String? {
 		get {
-			if let data = self.data(forKey: key),
-			   let dictionary = data.propertyList as? NSDictionary {
-			   	return dictionary
+			let data: Data? = self.data(forKey: key)
+			if let data = data {
+				return String(data: data as Data, encoding: String.Encoding.utf8)
 			}
 			return nil
 		}
 		set {
-			self.set(data: newValue?.data, forKey: key)
+			if let string = newValue {
+				let data = string.data(using: String.Encoding.utf8)
+				set(data: data, forKey: key)
+			}
+			else {
+				set(data: nil, forKey: key)
+			}
 		}
 	}
-*/
+
+	// MARK: -
+
+	subscript(key: String) -> NSArray? {
+		get {
+			if let data = self.data(forKey: key) {
+				return (try? PropertyListSerialization.propertyList(from: data, options: [], format: nil)) as? NSArray
+			}
+			return nil
+		}
+		set {
+			if let newValue = newValue {
+				let data = try? PropertyListSerialization.data(fromPropertyList: newValue, format: .binary, options: 0)
+				self.set(data: data, forKey: key)
+			}
+			else { self.set(data: nil, forKey: key) }
+		}
+	}
+
+	subscript(key: String) -> NSDictionary? {
+		get {
+			if let data = self.data(forKey: key) {
+				return (try? PropertyListSerialization.propertyList(from: data, options: [], format: nil)) as? NSDictionary
+			}
+			return nil
+		}
+		set {
+			if let newValue = newValue {
+				let data = try? PropertyListSerialization.data(fromPropertyList: newValue, format: .binary, options: 0)
+				self.set(data: data, forKey: key)
+			}
+			else { self.set(data: nil, forKey: key) }
+		}
+	}
+
 	// MARK: -
 
 	var keys: [String] {
@@ -522,22 +557,3 @@ class ZDataStorage {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

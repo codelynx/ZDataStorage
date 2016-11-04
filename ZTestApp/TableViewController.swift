@@ -73,18 +73,23 @@ class TableViewController: UITableViewController {
 			sender.title = "Start Generating"
 		}
 		else {
+			self.addEntry()
 			let selector = #selector(TableViewController.timerDidFire(timer:))
 			self.timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: selector, userInfo: nil, repeats: true)
 			sender.title = "Stop Generating"
 		}
 	}
 
-	func timerDidFire(timer: Timer) {
+	func addEntry() {
 		let number = arc4random_uniform(UInt32.max)
 		let key = String(format: "%08x", number)
 		let value = UUID().uuidString
 		self.dataStorage.set(string: value, forKey: key)
 		self.tableView.reloadData()
+	}
+
+	func timerDidFire(timer: Timer) {
+		self.addEntry()
 	}
 
 	@IBAction func crashAction(_ sender: Any) {
