@@ -36,8 +36,22 @@ class ZDataStorageTests: XCTestCase {
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+
+		let fileManager = FileManager.default
+		let directory = NSTemporaryDirectory()
+		do {
+			for item in try fileManager.contentsOfDirectory(atPath: directory) {
+				let pathExtension = (item as NSString).pathExtension
+				if self.extensions.contains(pathExtension) {
+					let filePath = (directory as NSString).appendingPathComponent(item)
+					try fileManager.removeItem(atPath: filePath)
+				}
+			}
+		}
+		catch let error {
+			print("\(error)")
+		}
     }
     
     func testExample() {
@@ -187,11 +201,40 @@ class ZDataStorageTests: XCTestCase {
 	}
 	
 
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
+    func testPerformanceWriting() {
+		let filePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic8.store")
+		let storage = ZDataStorage(path: filePath)!
         self.measure {
-            // Put the code you want to measure the time of here.
+			for _ in 0 ..< 1000 {
+				let uuid = NSUUID().uuidString
+				let hash = uuid.hashValue
+				let key = String(hash)
+				storage.set(string: uuid, forKey: key)
+			}
+			storage.commit()
         }
+
     }
-    
+
+    func testPerformanceReading() {
+		let filePath = (NSTemporaryDirectory() as NSString).appendingPathComponent("basic9.store")
+		let storage = ZDataStorage(path: filePath)!
+		for _ in 0 ..< 10000 {
+			let uuid = NSUUID().uuidString
+			let hash = uuid.hashValue
+			let key = String(hash)
+			storage.set(string: uuid, forKey: key)
+		}
+		storage.commit()
+
+		let keys = storage.keys
+        self.measure {
+			for _ in 0 ..< 1000 {
+				let key = keys[Int(arc4random_uniform(UInt32(keys.count)))]
+				let _ = storage.string(forKey: key)
+			}
+		}
+    }
+
+	
 }

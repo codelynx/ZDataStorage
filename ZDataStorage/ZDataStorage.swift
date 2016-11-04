@@ -31,7 +31,7 @@ import Foundation
 class ZDataStorage {
 
 	static let defaultFileSignature: UInt32 = 0x5a44415a  // 'ZDAT'
-	static let defaultFileFormatVersion: UInt32 = 0x0001_0000  // 1.0
+	static let defaultFileFormatVersion: UInt32 = 0x0002_0000  // 1.0
 	static let defaultAppFormatVersion: UInt32 = 0x0000_0000
 	
 	private struct FileHeader {
@@ -39,7 +39,7 @@ class ZDataStorage {
 		var fileSignature: UInt32
 		var fileFormatVersion: UInt32
 		var appFormatVersion: UInt32
-		var reserved: UInt32
+		var versionHash: UInt32
 		
 		var directoryOffset: UInt64
 		var deletedLength: UInt64
@@ -48,7 +48,7 @@ class ZDataStorage {
 			self.fileSignature = defaultFileSignature
 			self.fileFormatVersion = defaultFileFormatVersion
 			self.appFormatVersion = defaultAppFormatVersion
-			self.reserved = 0
+			self.versionHash = 0
 			self.directoryOffset = 0
 			self.deletedLength = 0
 		}
@@ -57,13 +57,13 @@ class ZDataStorage {
 			if let fileSignature = fileHandle.readUInt32(), fileSignature == defaultFileSignature,
 			   let fileFormatVersion = fileHandle.readUInt32(), fileFormatVersion == defaultFileFormatVersion,
 			   let appFormatVersion = fileHandle.readUInt32(),
-			   let reserved = fileHandle.readUInt32(),
+			   let version = fileHandle.readUInt32(),
 			   let directoryOffset = fileHandle.readUInt64(),
 			   let deletedLength = fileHandle.readUInt64() {
 				self.fileSignature = fileSignature
 				self.fileFormatVersion = fileFormatVersion
 				self.appFormatVersion = appFormatVersion
-				self.reserved = reserved
+				self.versionHash = version
 				self.directoryOffset = directoryOffset
 				self.deletedLength = deletedLength
 			}
@@ -74,7 +74,7 @@ class ZDataStorage {
 			fileHandle.writeUInt32(self.fileSignature)
 			fileHandle.writeUInt32(self.fileFormatVersion)
 			fileHandle.writeUInt32(self.appFormatVersion)
-			fileHandle.writeUInt32(self.reserved)
+			fileHandle.writeUInt32(self.versionHash)
 			fileHandle.writeUInt64(self.directoryOffset)
 			fileHandle.writeUInt64(self.deletedLength)
 		}
@@ -148,23 +148,6 @@ class ZDataStorage {
 		}
 		self.fileHandle = fileHandle
 
-		// look like it crashed last time -- salvage it from backup
-		if fileManager.fileExists(atPath: self.backupFilePath) {
-			// directory may have already been overwritten, so salvage from backup file
-			if let backupFileHandle = FileHandle(forReadingAtPath: self.backupFilePath) {
-				backupFileHandle.seek(toFileOffset: 0)
-				if let header = FileHeader(fileHandle: backupFileHandle) {
-					// find offset where directory was saved, or just next to the header
-					let offset = (header.directoryOffset > 0) ? header.directoryOffset : backupFileHandle.offsetInFile
-					if let directoryData = self.readChunk(fileHandle: backupFileHandle, offset: offset, chunkType: .directory) {
-						self.writeChunk(fileHandle: fileHandle, offset: header.directoryOffset, chunkType: .directory, data: directoryData)
-						fileHandle.truncateFile(atOffset: fileHandle.offsetInFile)
-					}
-					else { fatalError("Backuped directory cannot be restore.") }
-				}
-			}
-		}
-
 		// load directory
 		fileHandle.seek(toFileOffset: 0)
 		if let fileHeader = FileHeader(fileHandle: fileHandle) {
@@ -173,7 +156,32 @@ class ZDataStorage {
 				if let directory = self.decodeDirectory(data: directoryData) {
 					self.directory = directory
 				}
-				else { print("directory not found.") }
+				else {
+					
+					// look like directry cannot be found, let's see if we can salvage it from backup
+					if fileManager.fileExists(atPath: self.backupFilePath) {
+						// directory may have already been overwritten, so salvage from backup file
+						if let backupFileHandle = FileHandle(forReadingAtPath: self.backupFilePath) {
+							backupFileHandle.seek(toFileOffset: 0)
+							if let backupFileHeader = FileHeader(fileHandle: backupFileHandle) {
+								// find offset where directory was saved, or just next to the header
+								let backupDirectoryOffset = (backupFileHeader.directoryOffset > 0) ? backupFileHeader.directoryOffset : backupFileHandle.offsetInFile
+								if let backupDirectoryData = self.readChunk(fileHandle: backupFileHandle, offset: backupDirectoryOffset, chunkType: .directory) {
+									if let _ = try? JSONSerialization.jsonObject(with: backupDirectoryData, options: []) {
+										if fileHeader.versionHash == backupFileHeader.versionHash {
+											self.writeChunk(fileHandle: fileHandle, offset: fileHeader.directoryOffset, chunkType: .directory, data: backupDirectoryData)
+											fileHandle.truncateFile(atOffset: fileHandle.offsetInFile)
+										}
+										else { print("Version hash not much") }
+									}
+									else { print("Directory is not not a json") }
+								}
+								else { fatalError("Backuped directory cannot be restore.") }
+							}
+						}
+					}
+
+				}
 			}
 			self.fileHeader = fileHeader
 		}
@@ -233,6 +241,7 @@ class ZDataStorage {
 			if let header = self.readChunkHeader(fileHandle: self.fileHandle, offset: offset)  {
 				fileHeader.deletedLength += UInt64(header.length) + UInt64(MemoryLayout<ChunkHeader>.size)
 			}
+			else { print("Chunk header cannot be read. File may be corrupted.") }
 		}
 	
 		if let data = data { // append new chunk to the end of file
@@ -373,7 +382,7 @@ class ZDataStorage {
 		return ChunkHeader(fileHandle: fileHandle)
 	}
 
-	func checkIntegrity() {
+	func checkIntegrity() -> Bool {
 		self.lock.lock()
 		defer { self.lock.unlock() }
 	
@@ -391,12 +400,13 @@ class ZDataStorage {
 						}
 					}
 					print("number of entryies: \(directory.count)")
+					return true
 				}
-				else { print("error: Invalid directory format.") }
+				else { print("error: Invalid directory format.") ; return false }
 			}
-			else { print("error: No directory entry.") }
+			else { print("error: No directory entry.") ; return false }
 		}
-		else { print("error: No file header.") }
+		else { print("error: No file header.") ; return false }
 		
 	}
 
@@ -488,18 +498,23 @@ class ZDataStorage {
 		let offset = self.fileHandle.offsetInFile
 		self.writeChunk(fileHandle: fileHandle, offset: offset, chunkType: .directory, data: directoryData)
 		fileHeader.directoryOffset = offset
+		fileHeader.versionHash += 1
 		fileHandle.seek(toFileOffset: 0)
 		fileHeader.writeHeader(fileHandle: fileHandle)
 
 		let fileManager = FileManager.default
 		if !readonly && fileManager.fileExists(atPath: self.backupFilePath) {
-			if let backupFileHandle = FileHandle(forUpdatingAtPath: self.backupFilePath) {
+			if let backupFileHandle = FileHandle(forUpdatingAtPath: self.backupFilePath), var backupFileHeader = self.fileHeader {
 				backupFileHandle.seek(toFileOffset: 0)
-				fileHeader.writeHeader(fileHandle: backupFileHandle)
+				backupFileHeader.writeHeader(fileHandle: backupFileHandle)
 				let offset = backupFileHandle.offsetInFile
 				let data = self.encodeDirectory(directory: self.directory)
 				self.writeChunk(fileHandle: backupFileHandle, offset: offset, chunkType: .directory, data: data)
 				backupFileHandle.truncateFile(atOffset: backupFileHandle.offsetInFile)
+				backupFileHandle.seek(toFileOffset: 0)
+				backupFileHeader.directoryOffset = offset
+				backupFileHeader.versionHash = fileHeader.versionHash
+				backupFileHeader.writeHeader(fileHandle: backupFileHandle)
 			}
 		}
 
