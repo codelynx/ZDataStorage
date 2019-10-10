@@ -29,28 +29,27 @@
 import Foundation
 
 extension FileHandle {
-
+	
 	// read write as is
-
+	
 	private func read<T>() -> T? {
-		var data = self.readData(ofLength: MemoryLayout<T>.size)
+		let data = self.readData(ofLength: MemoryLayout<T>.size)
 		if data.count == MemoryLayout<T>.size {
-            var value: T?
-            data.withUnsafeBytes({ (bytes: UnsafePointer<T>) -> Void in
-                value = bytes.pointee
-            })
+			let value: T = data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> T in
+				return bytes.load(as: T.self)
+			}
 			return value
 		}
 		return nil
 	}
-
+	
 	private func write<T>(_ value: T) {
 		var value = value
-        let buffer = UnsafeBufferPointer(start: &value, count: 1)
-        let data = Data(buffer: buffer)
+		let buffer = UnsafeBufferPointer(start: &value, count: 1)
+		let data = Data(buffer: buffer)
 		self.write(data)
 	}
-
+	
 	// unsigned integers
 	
 	public func readUInt16() -> UInt16? {
@@ -59,7 +58,7 @@ extension FileHandle {
 		}
 		return nil
 	}
-
+	
 	public func writeUInt16(_ value: UInt16) {
 		let value16 = CFSwapInt16HostToBig(value)
 		self.write(value16)
@@ -71,61 +70,61 @@ extension FileHandle {
 		}
 		return nil
 	}
-
+	
 	public func writeUInt32(_ value: UInt32) {
 		let value = CFSwapInt32HostToBig(value)
 		self.write(value)
 	}
-
+	
 	public func readUInt64() -> UInt64? {
 		if let value = self.read() as UInt64? {
 			return CFSwapInt64BigToHost(value)
 		}
 		return nil
 	}
-
+	
 	public func writeUInt64(_ value: UInt64) {
 		let value = CFSwapInt64HostToBig(value)
 		self.write(value)
 	}
-
+	
 	// signed integers
-
+	
 	public func readInt16() -> Int16? {
 		if let value = self.readUInt16() {
 			return Int16(value)
 		}
 		return nil
 	}
-
+	
 	public func writeInt16(_ value: Int16) {
 		self.write(CFSwapInt16HostToBig(UInt16(value)))
 	}
-
+	
 	public func readInt32() -> Int32? {
 		if let value = self.readUInt32() {
 			return Int32(value)
 		}
 		return nil
 	}
-
+	
 	public func writeInt32(_ value: Int32) {
 		self.write(CFSwapInt32HostToBig(UInt32(value)))
 	}
-
+	
 	public func readInt64() -> Int64? {
 		if let value = self.readUInt64() {
 			return Int64(value)
 		}
 		return nil
 	}
-
+	
 	public func writeInt64(_ value: Int64) {
 		self.write(CFSwapInt64HostToBig(UInt64(value)))
 	}
-
+	
 	// float and double
-
+	
 	public func readFloat() -> Float? {
 		switch UInt32(CFByteOrderGetCurrent()) {
 		case CFByteOrderLittleEndian.rawValue:
@@ -148,7 +147,7 @@ extension FileHandle {
 		default: fatalError("Unknown Endian")
 		}
 	}
-
+	
 	public func readDouble() -> Double? {
 		switch UInt32(CFByteOrderGetCurrent()) {
 		case CFByteOrderLittleEndian.rawValue:
