@@ -88,7 +88,7 @@ class TableViewController: UITableViewController {
 		self.tableView.reloadData()
 	}
 
-	func timerDidFire(timer: Timer) {
+	@objc func timerDidFire(timer: Timer) {
 		self.addEntry()
 	}
 

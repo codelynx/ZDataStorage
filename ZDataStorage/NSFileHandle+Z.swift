@@ -92,7 +92,7 @@ extension FileHandle {
 	// signed integers
 
 	public func readInt16() -> Int16? {
-		if let value = self.readInt16() {
+		if let value = self.readUInt16() {
 			return Int16(value)
 		}
 		return nil
@@ -173,18 +173,3 @@ extension FileHandle {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
